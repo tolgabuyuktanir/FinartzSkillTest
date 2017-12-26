@@ -1,0 +1,65 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="finartz"/>
+
+    <!-- Spring bean finartz.javaProgramming.hibernateClasses.configuration. Tell Spring to bounce off BoneCP -->
+
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.connection.provider_class">com.jolbox.bonecp.provider.BoneCPConnectionProvider
+                </prop>
+
+
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://192.168.43.130:3306/test</prop>
+                <prop key="hibernate.connection.username">root</prop>
+                <prop key="hibernate.connection.password">1122334411</prop>
+                <prop key="bonecp.idleMaxAge">240</prop>
+                <prop key="bonecp.idleConnectionTestPeriod">60</prop>
+                <prop key="bonecp.partitionCount">3</prop>
+                <prop key="bonecp.acquireIncrement">1</prop>
+                <prop key="bonecp.maxConnectionsPerPartition">10</prop>
+                <prop key="bonecp.minConnectionsPerPartition">2</prop>
+                <prop key="bonecp.statementsCacheSize">50</prop>
+                <prop key="bonecp.releaseHelperThreads">3</prop>
+                <prop key="show_sql">true</prop>
+            </props>
+        </property>
+        <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>
+        <property name="configLocation" value="/WEB-INF/hibernate.cfg.xml"/>
+
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+
+    </bean>
+    <!--View Scope provider -->
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="view">
+                    <bean class="finartz.javaProgramming.configurations.ViewScope"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+
+    <tx:annotation-driven/>
+
+
+</beans>

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    <title>Giriş Sayfası</title>
+</h:head>
+<h:body>
+    <center><h2><h:outputText value="Kullanıcı Kayıtları"/></h2></center>
+    <h:form id="kullaniciForm">
+        <p:growl id="growl" showDetail="true" sticky="true" />
+        <h:dataTable id="kullaniciTable" binding="#{table}" value="#{kullanicilarBoImpl.allValues()}" var="kullanici" class="table table-striped table-hover table-bordered tableUpdated">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                <h:outputText value="#{table.rowIndex + 1}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="DBID"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Adi"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.ad}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Soyadi"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.soyad}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Kullanici Adi"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.kullaniciAdi}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="e-Mail"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.eMail}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Telefon"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.telNo}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Adres"/>
+                </f:facet>
+                <h:outputText value="#{kullanici.adres}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton value="Update" type="button"  action="#{kullanicilarBoImpl.edit()}" class="btn btn-primary">
+                    <f:param name="id" value="#{kullanici.id}"/>
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton action="#{kullanicilarBoImpl.delete(kullanici)}" value="Delete" onclick="return confirm('Are you sure?')" class="btn btn-danger"/>
+            </h:column>
+        </h:dataTable>
+        <center>
+            <h:commandButton action="#{kullanicilarBoImpl.createNewUser()}" value="Create New User" class="btn btn-success btnSpace" />
+        </center>
+    </h:form>
+    <p:dialog id="dlg2" header="Update" widgetVar="dlg2" modal="true" visible="#{facesContext.validationFailed}">
+        <h:form id="updateForm" class="form-group row">
+            <table class="table">
+                <tr>
+                    <td>Id:</td><td><h:outputText value="#{kullanicilarBoImpl.kullanicilar.id}"/></td>
+                </tr>
+                <tr>
+                    <td>Ad:</td><td><h:inputText id="ad" value="#{kullanicilarBoImpl.kullanicilar.ad}" required="true" maxlength="20"/></td><td><h:message for="ad"  style="color:red" /> </td>
+                </tr>
+                <tr>
+                    <td>Soyad:</td><td><h:inputText id="soyad" value="#{kullanicilarBoImpl.kullanicilar.soyad}" required="true" maxlength="20"/></td><td><h:message for="soyad"  style="color:red" /> </td>
+                </tr>
+                <tr>
+                    <td>Kullanıcı Adı:</td><td><h:inputText id="kullaniciAdi" value="#{kullanicilarBoImpl.kullanicilar.kullaniciAdi}" required="true" maxlength="20"/></td><td><h:message for="kullaniciAdi"  style="color:red" /> </td>
+                </tr>
+                <tr>
+                    <td>e-Mail:</td><td><h:inputText id="email" value="#{kullanicilarBoImpl.kullanicilar.eMail}" required="true" maxlength="50"/></td><td><h:message for="email"  style="color:red" /> </td>
+                </tr>
+                <tr>
+                    <td>Telefon:</td><td><p:inputMask id="tel" value="#{kullanicilarBoImpl.kullanicilar.telNo}" mask="(999)-999-9999" required="true"/></td><td><h:message for="tel"  style="color:red"/> </td>
+                </tr>
+                <tr>
+                    <td>Adres:</td><td><h:inputText id="adres" value="#{kullanicilarBoImpl.kullanicilar.adres}" required="true" maxlength="100"/></td><td><h:message for="adres"  style="color:red" /> </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <p:captcha label="Captcha"  required="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td><td><h:commandButton action="#{kullanicilarBoImpl.saveOrUpdate(kullanicilar)}" value="#{kullanicilarBoImpl.buttonValue}" update=":dlg2" class="btn btn-primary" /></td><td></td>
+                </tr>
+            </table>
+        </h:form>
+    </p:dialog>
+
+</h:body>
+</html>
