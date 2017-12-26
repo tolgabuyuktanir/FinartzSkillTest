@@ -1,2 +1,2 @@
 # FinartzSkillTest
-Finartz Homework
+Finartz Homework includes Hibernate, Spring, Maven, BoneCp, Primefaces, Ajax, JSF Technologies. 
