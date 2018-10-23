@@ -25,7 +25,7 @@
                 <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                 <prop key="hibernate.connection.url">jdbc:mysql://192.168.43.130:3306/test</prop>
                 <prop key="hibernate.connection.username">root</prop>
-                <prop key="hibernate.connection.password">1122334411</prop>
+                <prop key="hibernate.connection.password">password</prop>
                 <prop key="bonecp.idleMaxAge">240</prop>
                 <prop key="bonecp.idleConnectionTestPeriod">60</prop>
                 <prop key="bonecp.partitionCount">3</prop>
